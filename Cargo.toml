@@ -1,0 +1,26 @@
+[package]
+name = "rv-os"
+version = "0.1.0"
+edition = "2021"
+authors = ["RV-OS Developer"]
+
+[[bin]]
+name = "rv-os"
+path = "src/main.rs"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[dependencies]
+volatile = "0.4.6"
+spin = "0.9.8"
+cortex-a = "8.1.1"      # ARM Cortex-A processor support
+aarch64-cpu = "9.3.1"   # AArch64 CPU features
+tock-registers = "0.8.1" # Memory-mapped register operations
+
+[package.metadata.bootimage]
+build-command = ["build"]
+run-command = ["qemu-system-aarch64", "-M", "virt", "-cpu", "cortex-a53", "-kernel", "{}"]
